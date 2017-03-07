@@ -14,7 +14,7 @@
   <h4>Raw data in "movieForm.value":</h4>
   <p>{{movieForm.value | json}}</p>
 
-  <div [hidden]="!movieForm.value?.title || movieForm.value?.year || movieForm.value?.genre">
+  <div [hidden]="!movieForm.value?.title || !movieForm.value?.year || !movieForm.value?.genre">
     <h4>Detail</h4>
     <p>
       <strong>{{movieForm.value?.title}}</strong> 
