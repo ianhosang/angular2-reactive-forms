@@ -1,0 +1,26 @@
+<form [formGroup]="movieForm">
+  <h1>Movie Form</h1>
+  <label>Name</label>
+  <input type="text" formControlName="title" />
+  <label>Year</label>
+  <input type="number" formControlName="year" />
+  <label>genre</label>
+  <select formControlName="genre">
+    <option *ngFor="let genre of ['horror', 'psy-fi', 'drama']" [value]="genre">{{genre}}</option>
+  </select>
+
+  <hr>
+
+  <h4>Raw data in "movieForm.value":</h4>
+  <p>{{movieForm.value | json}}</p>
+
+  <div [hidden]="!movieForm.value?.title || movieForm.value?.year || movieForm.value?.genre">
+    <h4>Detail</h4>
+    <p>
+      <strong>{{movieForm.value?.title}}</strong> 
+      is a movie from <strong>{{movieForm.value?.year}}</strong> 
+      of the <strong>{{movieForm.value?.genre}}</strong> genre.
+    </p>
+  </div>
+
+</form>

@@ -1,0 +1,27 @@
+form {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+}
+
+input, select, label {
+    display: block;
+    width: 100%;
+    padding: 3px;
+}
+
+label {
+    margin: 10px 0 5px 0; 
+}
+
+h1, h2, h3, h4, h5, h5 {
+    margin: 0 5px 0 0;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+hr {
+    margin: 15px 0;
+}
