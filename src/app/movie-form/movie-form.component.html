@@ -4,11 +4,19 @@
   <input type="text" formControlName="title" />
   <label>Year</label>
   <input type="number" formControlName="year" />
-  <label>genre</label>
+  <label>Genre</label>
   <select formControlName="genre">
     <option *ngFor="let genre of ['horror', 'psy-fi', 'drama']" [value]="genre">{{genre}}</option>
   </select>
-
+  <label>Main Star (typeahead)</label>
+  <typeahead
+    formControlName="mainStar"
+    [list]="(stars | async)"
+    [searchProperty]="'searchText'"
+    [displayProperty]="'name'"
+    [maxSuggestions]="5"
+    (suggestionSelected)="selectMainStar($event)">
+  </typeahead>
   <hr>
 
   <h4>Raw data in "movieForm.value":</h4>
@@ -19,7 +27,8 @@
     <p>
       <strong>{{movieForm.value?.title}}</strong> 
       is a movie from <strong>{{movieForm.value?.year}}</strong> 
-      of the <strong>{{movieForm.value?.genre}}</strong> genre.
+      of the <strong>{{movieForm.value?.genre}}</strong> genre, 
+      staring <strong>{{movieForm.value?.mainStar}}</strong>
     </p>
   </div>
 
