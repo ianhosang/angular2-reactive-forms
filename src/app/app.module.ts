@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { Typeahead } from 'ng2-typeahead';
+import { Typeahead } from './type-ahead/typeahead.component';
 
 import { AppComponent } from './app.component';
 import { MovieFormComponent } from './movie-form/movie-form.component';
