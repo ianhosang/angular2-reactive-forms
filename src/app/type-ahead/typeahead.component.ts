@@ -19,7 +19,9 @@ export class Typeahead implements ControlValueAccessor {
   @Input() searchProperty: string = 'name';
   @Input() displayProperty: string = 'name';
   @Input() maxSuggestions: number = -1;
+  @Input() async: boolean = false;
   @Output() suggestionSelected = new EventEmitter<any>();
+  @Output() textTyped = new EventEmitter<string>();
   @ViewChild('inputElement') private inputElement: any;
 
   private input: string;
@@ -64,6 +66,13 @@ export class Typeahead implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean): void {
     this.isDisabled = isDisabled;
+  }
+
+  ngOnChanges(changes) {
+    if (this.async && changes.list && changes.list) {
+      this.populateSuggestions();
+      this.populateTypeahead();
+    }
   }
 
   public inputKeyDown(event: KeyboardEvent) {
@@ -163,6 +172,7 @@ export class Typeahead implements ControlValueAccessor {
     }
 
     this.previousInput = this.input;
+    this.textTyped.emit(this.input);
     this.populateSuggestions();
     this.populateTypeahead();
   }

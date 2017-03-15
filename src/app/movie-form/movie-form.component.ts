@@ -9,6 +9,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class MovieFormComponent {
 
+  private readonly minToSuggest: number = 4;
   public movieForm: FormGroup = new FormGroup({
     title: new FormControl(),
     year: new FormControl(),
@@ -16,41 +17,43 @@ export class MovieFormComponent {
     mainStar: new FormControl()
   });
 
-  /**
-   * this observable simulates an HTTP request
-   */
-  public stars: Observable<{id: number, name: string, searchText: string}[]> = new Observable(observer => {
-    observer.next([
-      {
-        id: 1,
-        name: "Clint Eastwood",
-        searchText: "clint eastwood"
-      },
-      {
-        id: 2,
-        name: "Uma Thurman",
-        searchText: "uma thurman"
-      },
-      {
-        id: 3,
-        name: "David Caradine",
-        searchText: "david caradine"
-      },
-      {
-        id: 4,
-        name: "Christian Bale",
-        searchText: "christian bale"
-      },
-      {
-        id: 5,
-        name: "Daniel Isaac Geslin",
-        searchText: "daniel isaac geslin"
-      }
-    ]);
-    observer.complete();
-  });
+  public stars: any[] = [];
 
   constructor() { }
+
+  public getStars(value: string) {
+    if (!value || value.length < this.minToSuggest) return;
+    /* http service */
+    setTimeout(() => {
+      this.stars = [
+        {
+          id: 1,
+          name: Math.random().toString(), //just to prove it's updating itself
+          searchText: "clint eastwood"
+        },
+        {
+          id: 2,
+          name: Math.random().toString(), //just to prove it's updating itself
+          searchText: "uma thurman"
+        },
+        {
+          id: 3,
+          name: Math.random().toString(), //just to prove it's updating itself
+          searchText: "david caradine"
+        },
+        {
+          id: 4,
+          name: Math.random().toString(), //just to prove it's updating itself
+          searchText: "christian bale"
+        },
+        {
+          id: 5,
+          name: Math.random().toString(), //just to prove it's updating itself
+          searchText: "daniel isaac geslin"
+        }
+      ]
+    }, 500);
+  }
 
   public selectMainStar(star) {
     this.movieForm.value.mainStar = star && star.name;

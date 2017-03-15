@@ -11,11 +11,13 @@
   <label>Main Star (typeahead)</label>
   <typeahead
     formControlName="mainStar"
-    [list]="(stars | async)"
+    [list]="stars"
     [searchProperty]="'searchText'"
     [displayProperty]="'name'"
-    [maxSuggestions]="5"
-    (suggestionSelected)="selectMainStar($event)">
+    [maxSuggestions]="4"
+    (suggestionSelected)="selectMainStar($event)"
+    [async]="true"
+    (textTyped)="getStars($event)">
   </typeahead>
   <hr>
 
