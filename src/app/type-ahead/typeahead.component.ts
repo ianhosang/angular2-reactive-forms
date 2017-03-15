@@ -69,7 +69,7 @@ export class Typeahead implements ControlValueAccessor {
   }
 
   ngOnChanges(changes) {
-    if (this.async && changes.list && changes.list) {
+    if (this.async && changes.list) {
       this.populateSuggestions();
       this.populateTypeahead();
     }

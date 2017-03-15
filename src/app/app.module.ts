@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { Typeahead } from './type-ahead/typeahead.component';
+import { InputBooleanComponent } from './input-boolean/input-boolean.component';
 
 import { AppComponent } from './app.component';
 import { MovieFormComponent } from './movie-form/movie-form.component';
@@ -14,7 +15,8 @@ import { MovieFormService } from './movie-form.service';
   declarations: [
     AppComponent,
     MovieFormComponent,
-    Typeahead
+    Typeahead,
+    InputBooleanComponent
   ],
   imports: [
     BrowserModule,

@@ -14,7 +14,8 @@ export class MovieFormComponent {
     title: new FormControl(),
     year: new FormControl(),
     genre: new FormControl(),
-    mainStar: new FormControl()
+    mainStar: new FormControl(),
+    foreign: new FormControl()
   });
 
   public stars: any[] = [];
