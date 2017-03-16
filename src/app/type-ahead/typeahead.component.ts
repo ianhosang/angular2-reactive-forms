@@ -20,11 +20,12 @@ export class Typeahead implements ControlValueAccessor {
   @Input() displayProperty: string = 'name';
   @Input() maxSuggestions: number = -1;
   @Input() async: boolean = false;
+  @Input() defaultValue: any = null;
   @Output() suggestionSelected = new EventEmitter<any>();
   @Output() textTyped = new EventEmitter<string>();
   @ViewChild('inputElement') private inputElement: any;
 
-  private input: string;
+  private input: string = '';
   private typeahead: string;
   private previousInput: string;
   private suggestions: any[] = [];
@@ -69,7 +70,17 @@ export class Typeahead implements ControlValueAccessor {
   }
 
   ngOnChanges(changes) {
-    if (this.async && changes.list) {
+    let shouldPopulate: boolean = false;
+    if (changes.list) shouldPopulate = true;
+
+    if (changes.defaultValue && changes.defaultValue.currentValue &&
+      (!changes.defaultValue.previousValue ||
+        changes.defaultValue.currentValue[this.searchProperty] !== changes.defaultValue.previousValue[this.searchProperty])) {
+      this.input = this.defaultValue[this.searchProperty];
+      shouldPopulate = true;
+    }
+
+    if (shouldPopulate) {
       this.populateSuggestions();
       this.populateTypeahead();
     }
@@ -178,9 +189,11 @@ export class Typeahead implements ControlValueAccessor {
   }
 
   public inputFocus(event: FocusEvent) {
+    this.textTyped.emit(this.input || '');
+    
     if (this.selectedSuggestion != null) {
       this.selectSuggestion(null);
-      this.input = null;
+      this.input = '';
       this.populateTypeahead();
     }
 
@@ -219,16 +232,16 @@ export class Typeahead implements ControlValueAccessor {
       console.error('The input attribute `searchProperty` must be provided');
       return;
     }
-
+    
     if (input == null || input.length === 0) {
       this.suggestions = [];
       this.areSuggestionsVisible = false;
-      return;
     }
 
     if (this.list == null || this.list.length === 0) return;
 
     this.suggestions = this.list.filter(function (item) {
+      if (!input) return true;
       return item[searchProperty].toLowerCase().indexOf(input.toLowerCase()) > -1;
     });
 
@@ -248,7 +261,12 @@ export class Typeahead implements ControlValueAccessor {
 
   public populateTypeahead() {
     if (this.activeSuggestion == null || !this.areSuggestionsVisible) {
-      this.typeahead = '';
+      /** modification to allow data that is not a suggestion to complete the input */
+      this.typeahead = this.input;
+      this.suggestionSelected.emit({
+        [this.displayProperty]: this.input,
+        [this.searchProperty]: this.input
+      });
       return;
     }
     this.typeahead = this.input + (this.activeSuggestion[this.displayProperty] || '').slice(this.input.length);

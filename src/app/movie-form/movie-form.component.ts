@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class MovieFormComponent {
 
-  private readonly minToSuggest: number = 4;
+  private readonly minToSuggest: number = 0;
   public movieForm: FormGroup = new FormGroup({
     title: new FormControl(),
     year: new FormControl(),
@@ -19,38 +19,51 @@ export class MovieFormComponent {
   });
 
   public stars: any[] = [];
+  public defaultValue: any;
 
   constructor() { }
 
+  ngOnInit() {
+    /** http service getting defaults */
+    setTimeout(() => {
+      this.defaultValue = {
+        id: 1,
+        name: 'clint eastwood',
+        searchText: 'clint eastwood'
+      };
+    }, 500);
+    
+  }
+
   public getStars(value: string) {
-    if (!value || value.length < this.minToSuggest) return;
+    if (value.length < this.minToSuggest) return;
     /* http service */
     setTimeout(() => {
       this.stars = [
         {
           id: 1,
-          name: Math.random().toString(), //just to prove it's updating itself
-          searchText: "clint eastwood"
+          name: 'clint eastwood',
+          searchText: 'clint eastwood'
         },
         {
           id: 2,
           name: Math.random().toString(), //just to prove it's updating itself
-          searchText: "uma thurman"
+          searchText: 'uma thurman'
         },
         {
           id: 3,
           name: Math.random().toString(), //just to prove it's updating itself
-          searchText: "david caradine"
+          searchText: 'david caradine'
         },
         {
           id: 4,
           name: Math.random().toString(), //just to prove it's updating itself
-          searchText: "christian bale"
+          searchText: 'christian bale'
         },
         {
           id: 5,
           name: Math.random().toString(), //just to prove it's updating itself
-          searchText: "daniel isaac geslin"
+          searchText: 'daniel isaac geslin'
         }
       ]
     }, 500);

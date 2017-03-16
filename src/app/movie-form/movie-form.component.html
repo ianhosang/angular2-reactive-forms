@@ -17,6 +17,7 @@
     [maxSuggestions]="4"
     (suggestionSelected)="selectMainStar($event)"
     [async]="true"
+    [defaultValue]="defaultValue"
     (textTyped)="getStars($event)">
   </typeahead>
   <label>Origin (typeahead)</label>
